@@ -47,6 +47,8 @@ project/
 ├── <span style="color: #4CAF50;">consumer.py</span>   # Script chính để khởi tạo một consumer
 ├── <span style="color: #4CAF50;">consumer_2.py</span>   # Script phụ để chia tài nguyên khi pull về 
 ├── <span style="color: #4CAF50;">consumer_3.py</span>   # Script phụ để chia tài nguyên khi pull về 
+</code>
+</pre>
   
 ## Hình ảnh
 ![image](https://github.com/user-attachments/assets/4004c0bd-3c2a-47db-9c2a-be0cf30e9e82)
