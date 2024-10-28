@@ -2,9 +2,13 @@
 
 ## Mục lục 
 -[Tổng quan](tổng-quan)
+
 -[Công nghệ sử dụng](công-nghệ-sử-dụng)
+
 -[Luồng dữ liệu](luồng-dữ-liệu)
+
 -[Cấu trúc dự án](cấu-trúc-dự-án)
+
 -[Hình ảnh](hình-ảnh)
 
 ## Tổng quan
