@@ -23,20 +23,12 @@ Dự án này sử dụng python để làm việc với kafka cụ thể là t�
 1. Định nghĩa hàm connect_postgres() để kết nối đến cơ sở dữ liệu PostgreSQL.
 2. Trong hàm main():
 
-  Khởi tạo một Consumer Kafka và đăng ký topic cần đọc.
-  Kết nối đến PostgreSQL sử dụng hàm connect_postgres().
+  -> Khởi tạo một Consumer Kafka và đăng ký topic cần đọc.
+  -> Kết nối đến PostgreSQL sử dụng hàm connect_postgres().
   Trong vòng lặp vô hạn:
-
-  Đọc dữ liệu từ Kafka.
-  Xử lý dữ liệu (giải mã nếu cần).
-  Thực hiện câu lệnh SQL để lưu dữ liệu vào PostgreSQL.
-  Xử lý các lỗi có thể xảy ra.
-
-
-  Đóng kết nối Kafka và PostgreSQL khi kết thúc.
-
-
-  Lưu thông tin cấu hình kết nối PostgreSQL trong file postgres_config.py.
+  Đọc dữ liệu từ Kafka -> Xử lý dữ liệu -> Thực hiện câu lệnh SQL để lưu dữ liệu vào PostgreSQL -> Xử lý các lỗi có thể xảy ra
+  -> Đóng kết nối Kafka và PostgreSQL khi kết thúc.
+  -> Lưu thông tin cấu hình kết nối PostgreSQL trong file postgres_config.py.
 
 Bằng cách triển khai các bước này, ứng dụng sẽ đọc dữ liệu từ Kafka và lưu trữ vào cơ sở dữ liệu PostgreSQL.
 ## Cấu trúc dự án
