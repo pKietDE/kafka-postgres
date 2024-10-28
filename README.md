@@ -1,15 +1,11 @@
 # kafka-postgres
 
 ## Mục lục 
--[Tổng quan](tổng-quan)
-
--[Công nghệ sử dụng](công-nghệ-sử-dụng)
-
--[Luồng dữ liệu](luồng-dữ-liệu)
-
--[Cấu trúc dự án](cấu-trúc-dự-án)
-
--[Hình ảnh](hình-ảnh)
+- [Tổng quan](tổng-quan)
+- [Công nghệ sử dụng](công-nghệ-sử-dụng)
+- [Luồng dữ liệu](luồng-dữ-liệu)
+- [Cấu trúc dự án](cấu-trúc-dự-án)
+- [Hình ảnh](hình-ảnh)
 
 ## Tổng quan
 Dự án này sử dụng python để làm việc với kafka cụ thể là tạo một consumer để xử lý việc đọc dữ liệu từ một topic và lữu trữ nó vào database (***Postgresql***)
