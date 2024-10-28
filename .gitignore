@@ -1,0 +1,19 @@
+# Bỏ qua thư mục ảo môi trường
+.kafkavenv/
+
+# Bỏ qua tất cả các tệp GIF
+*.gif
+
+# Bỏ qua tệp bắt đầu bằng dấu gạch dưới
+__pycache__/
+*.py[cod]
+
+# Bỏ qua tất cả các tệp tạm thời
+*~
+*.tmp
+
+# Bỏ qua các tệp log
+*.log
+
+# Bỏ qua các tệp config
+*config.py
