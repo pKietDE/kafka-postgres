@@ -18,11 +18,10 @@ Dự án này sử dụng python để làm việc với kafka cụ thể là t�
 + Adminer (công cụ quản lý cơ sở dữ liệu dựa trên web)
 
 ## Luồng dữ liệu
-để đọc dữ liệu từ Kafka và lưu trữ vào PostgreSQL trong dự án này, cần thực hiện các bước chính sau:
+*để đọc dữ liệu từ Kafka và lưu trữ vào PostgreSQL trong dự án này, cần thực hiện các bước chính sau:*
 
 1. Định nghĩa hàm connect_postgres() để kết nối đến cơ sở dữ liệu PostgreSQL.
 2. Trong hàm main():
-
   -> Khởi tạo một Consumer Kafka và đăng ký topic cần đọc.
   -> Kết nối đến PostgreSQL sử dụng hàm connect_postgres().
   Trong vòng lặp vô hạn:
