@@ -134,7 +134,7 @@ class HandlerPostgres(MessageHandler):
             cart_product_dict = {
                 'product_id': product.get('product_id'),
                 'price': self.process_price(product.get('price')),
-                'quantity': product.get('amount'),
+                'amount': product.get('amount'),
                 'collection': collection
             }
             cart_products_list.append(cart_product_dict)
