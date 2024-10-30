@@ -8,7 +8,7 @@
 - [Hình ảnh](#hình-ảnh)
 
 ## Tổng quan
-Dự án này sử dụng python để làm việc với kafka cụ thể là tạo một consumer để xử lý việc đọc dữ liệu từ một topic và lữu trữ nó vào database (***Postgresql***)
+Dự án này sử dụng python để làm việc với kafka cụ thể là lấy dữ liệu từ một topic source đưa dữ liệu vào topic local và  tạo một consumer để xử lý việc đọc dữ liệu từ  topic trên  và lữu trữ nó vào database (***Postgresql***)
 
 ## Công nghệ sử dụng
 + Docker
@@ -38,6 +38,7 @@ project/
 ├── <span style="color: #4CAF50;">consumer.py</span>   # Script chính để khởi tạo một consumer
 ├── <span style="color: #4CAF50;">consumer_2.py</span>   # Script phụ để chia tài nguyên khi pull về 
 ├── <span style="color: #4CAF50;">consumer_3.py</span>   # Script phụ để chia tài nguyên khi pull về 
+├── <span style="color: #4CAF50;">get_data_topic_product_view.py</span>   # Script để lấy dữ liệu từ topic source về topic local 
 </code>
 </pre>
   
