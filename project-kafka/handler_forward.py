@@ -23,3 +23,5 @@ class HandlerForward(MessageHandler):
             self.logger.info(f"Đã forward message thành công đến {destination_topic}")
         except Exception as e:
             self.logger.error(f"Lỗi khi forward message: {e}")
+
+

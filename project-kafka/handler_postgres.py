@@ -10,6 +10,7 @@ class HandlerPostgres(MessageHandler):
         self.conn = None
         self.cursor = None
         self.logger = logging.getLogger(__name__)
+        self.consumer = None
 
     def connect(self):
         """Thiết lập kết nối PostgreSQL"""
@@ -25,9 +26,10 @@ class HandlerPostgres(MessageHandler):
             self.logger.error(f"Lỗi kết nối PostgreSQL: {e}")
             raise
 
-    def handle_message(self, msg):
+    def handle_message(self, msg, consumer):
         """Xử lý message từ topic local"""
         try:
+            self.consumer = consumer
             value = msg.value().decode('utf-8') if msg.value() else None
             if not value:
                 return
@@ -152,6 +154,10 @@ class HandlerPostgres(MessageHandler):
 
     def stop(self):
         """Đóng cursor và kết nối nếu chúng còn mở"""
+        if self.consumer:
+            print("Đã đóng Consumer trong postgres")
+            self.consumer.close()
+            self.consumer = None
         if self.cursor:
             self.cursor.close()
             self.cursor = None

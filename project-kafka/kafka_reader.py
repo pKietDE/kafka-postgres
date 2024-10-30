@@ -39,7 +39,7 @@ class KafkaReader:
                 if is_forwarding:
                     self.handler.handle_message(msg, destination_topic)
                 else:
-                    self.handler.handle_message(msg)
+                    self.handler.handle_message(msg, self.consumer)
 
         except KeyboardInterrupt:
             self.logger.info("Nhận tín hiệu dừng từ người dùng")
