@@ -1,46 +1,51 @@
-from kafka_config import CONSUMER_CONFIG_MAIN, PRODUCER_CONFIG_LOCAL, CONSUMER_CONFIG_LOCAL
-from kafka_handler import KafkaMessageHandler
-from kafka_postgres_config import POSTGRES_CONFIG
-import threading
+import logging
+from confluent_kafka import Consumer
+from handler_postgres import HandlerPostgres
+from handler_forward import HandlerForward
+from kafka_reader import KafkaReader 
+from kafka_config import *
+from threading import Thread
 
-def forward_messages():
-    handler_forward_message = KafkaMessageHandler(
-        consumer_config=CONSUMER_CONFIG_MAIN,  
-        producer_config=PRODUCER_CONFIG_LOCAL  
-    )
-    handler_forward_message.kafka_loop(
-        source_topic="product_view",
-        destination_topic="product_view_local",
-        is_forwarding=True
-    )
+# Cấu hình logger
+logging.basicConfig(level=logging.INFO)
 
-def consume_postgres(consumer_id):
-    print(f"Consumer_ID: {consumer_id}")
-    handler_consume_postgres = KafkaMessageHandler(
-        consumer_config=CONSUMER_CONFIG_LOCAL,  
-        postgres_config=POSTGRES_CONFIG
-    )
-    handler_consume_postgres.kafka_loop(
-        local_topic="product_view_local"
-    )
+
+# Khởi tạo handler cho PostgreSQL
+postgres_handler = HandlerPostgres(POSTGRES_CONFIG)
+
+# Khởi tạo handler cho forwarding 
+forwarding_handler = HandlerForward(producer_config=PRODUCER_CONFIG_LOCAL)
+
+# Tạo đối tượng KafkaReader cho chế độ xử lý local
+local_reader = KafkaReader(CONSUMER_CONFIG_LOCAL, postgres_handler)
+
+# Tạo đối tượng KafkaReader cho chế độ forwarding
+forwarding_reader = KafkaReader(CONSUMER_CONFIG_MAIN, forwarding_handler)
+
+def run_local_reader():
+    # Đọc message từ topic local và xử lý
+    local_reader.kafka_loop(local_topic='product_view_local')
+def run_forwarding_reader():
+     # Đọc message từ topic nguồn và forward đến topic đích
+    forwarding_reader.kafka_loop(source_topic='product_view', destination_topic='product_view_local', is_forwarding=True)
 
 if __name__ == "__main__":
     try:
-        # Tạo và bắt đầu luồng forward
-        thread_forward = threading.Thread(target=forward_messages)
-        thread_forward.start()
+        # Tạo và khởi động các luồng cho cả hai reader
+        local_thread = Thread(target=run_local_reader)
+        forwarding_thread = Thread(target=run_forwarding_reader)
 
-        # Tạo và bắt đầu 3 luồng consumer
-        consumer_threads = []
-        for i in range(3):
-            thread = threading.Thread(target=consume_postgres, args=(i+1,))
-            consumer_threads.append(thread)
-            thread.start()
+        local_thread.start()
+        forwarding_thread.start()
 
-        # Đợi cho tất cả các luồng kết thúc
-        thread_forward.join()
-        for thread in consumer_threads:
-            thread.join()
+        # ngắt chương trình
+        local_thread.join()
+        forwarding_thread.join()
 
-    except Exception as e:
-        print(f"Lỗi xảy ra: {e}")
+    except KeyboardInterrupt:
+        logging.info("Ngắt chương trình...")
+
+    # Dừng tất cả consumers
+    finally:
+        local_reader.stop()
+        forwarding_reader.stop()
