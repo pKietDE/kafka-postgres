@@ -44,11 +44,7 @@ class HandlerPostgres(MessageHandler):
             self.logger.error(f"Lỗi phân tích JSON: {e}")
         except Exception as e:
             self.logger.error(f"Lỗi xử lý message: {e}")
-        finally:
-            if self.cursor:
-                self.cursor.close()
-            if self.conn:
-                self.conn.close()
+
 
     def _prepare_data_for_insert(self, value_dict):
         """Chuẩn bị dữ liệu để insert"""
@@ -153,3 +149,12 @@ class HandlerPostgres(MessageHandler):
         except ValueError:
             self.logger.error(f"Không thể xử lý giá trị price: {price_str}")
             return None
+
+    def stop(self):
+        """Đóng cursor và kết nối nếu chúng còn mở"""
+        if self.cursor:
+            self.cursor.close()
+            self.cursor = None
+        if self.conn:
+            self.conn.close()
+            self.conn = None

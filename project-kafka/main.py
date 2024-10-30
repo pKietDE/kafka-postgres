@@ -16,13 +16,17 @@ postgres_handler = HandlerPostgres(POSTGRES_CONFIG)
 # Khởi tạo handler cho forwarding 
 forwarding_handler = HandlerForward(producer_config=PRODUCER_CONFIG_LOCAL)
 
-# Tạo đối tượng KafkaReader cho chế độ xử lý local
-local_reader = KafkaReader(CONSUMER_CONFIG_LOCAL, postgres_handler)
+
 
 # Tạo đối tượng KafkaReader cho chế độ forwarding
 forwarding_reader = KafkaReader(CONSUMER_CONFIG_MAIN, forwarding_handler)
 
-def run_local_reader():
+def run_local_reader(reader_id):
+    print(f"Reader_ID : {reader_id}")
+
+    # Tạo đối tượng KafkaReader cho chế độ xử lý local
+    local_reader = KafkaReader(CONSUMER_CONFIG_LOCAL, postgres_handler)
+
     # Đọc message từ topic local và xử lý
     local_reader.kafka_loop(local_topic='product_view_local')
 def run_forwarding_reader():
@@ -32,20 +36,27 @@ def run_forwarding_reader():
 if __name__ == "__main__":
     try:
         # Tạo và khởi động các luồng cho cả hai reader
-        local_thread = Thread(target=run_local_reader)
-        forwarding_thread = Thread(target=run_forwarding_reader)
+        local_threads = []
+        for i in range(3):
+            thread = Thread(target=run_local_reader, args=(i,))
+            local_threads.append(thread)
+            thread.start()
 
-        local_thread.start()
+        # Khởi động luồng cho forwarding reader
+        forwarding_thread = Thread(target=run_forwarding_reader)
         forwarding_thread.start()
 
         # ngắt chương trình
-        local_thread.join()
         forwarding_thread.join()
+
+        # Chờ cho các luồng local hoàn thành
+        for thread in local_threads:
+            thread.join()
 
     except KeyboardInterrupt:
         logging.info("Ngắt chương trình...")
 
     # Dừng tất cả consumers
     finally:
-        local_reader.stop()
         forwarding_reader.stop()
+        postgres_handler.stop()
