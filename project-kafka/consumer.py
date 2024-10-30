@@ -2,7 +2,7 @@ from confluent_kafka import Consumer  # type: ignore
 import json
 import psycopg2  # type: ignore
 from postgres_config import POSTGRES_CONFIG
-from consumer_config import CONSUMER_CONFIG
+from kafka_config import CONSUMER_CONFIG_LOCAL
 import logging
 from psycopg2 import Error as PostgresError
 
@@ -20,10 +20,10 @@ def connect_postgres():
 
 def main():
     # Tạo Consumer
-    consumer = Consumer(**CONSUMER_CONFIG)
+    consumer = Consumer(**CONSUMER_CONFIG_LOCAL)
 
     # Đăng ký topic 
-    topic = "product_view"
+    topic = "product_view_local"
     consumer.subscribe([topic])
 
     conn = None
