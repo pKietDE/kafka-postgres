@@ -35,10 +35,9 @@ Bằng cách triển khai các bước này, ứng dụng sẽ đọc dữ liệ
 <code>
 project/
 │
-├── <span style="color: #4CAF50;">consumer.py</span>   # Script chính để khởi tạo một consumer
-├── <span style="color: #4CAF50;">consumer_2.py</span>   # Script phụ để chia tài nguyên khi pull về 
-├── <span style="color: #4CAF50;">consumer_3.py</span>   # Script phụ để chia tài nguyên khi pull về 
-├── <span style="color: #4CAF50;">get_data_topic_product_view.py</span>   # Script để lấy dữ liệu từ topic source về topic local 
+├── <span style="color: #4CAF50;">kafka_handler.py</span>   # Script chính để tạo các hàm xử lý
+├── <span style="color: #4CAF50;">main.py</span>   # Script để xử lý việc tiêu thụ
+
 </code>
 </pre>
   
