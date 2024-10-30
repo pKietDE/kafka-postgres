@@ -17,3 +17,6 @@ __pycache__/
 
 # Bỏ qua các tệp config
 *config.py
+
+#Bỏ qua thư mục code/ 
+code/
