@@ -22,4 +22,4 @@ __pycache__/
 code/
 
 # Bỏ qua các tệp .sh 
-.sh
+*.sh
