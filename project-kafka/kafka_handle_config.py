@@ -22,16 +22,12 @@ class ConfigReader:
         # Duyệt qua tất cả các key-value trong phần KAFKA và đặt vào làm giá trị mặc định
         default_section = 'KAFKA'
         for key, value in self.config[default_section].items():
-            if name_section == "KAFKA_PRODUCER_LOCAL" and key == 'subscribe':
-                continue  # Bỏ qua thuộc tính 'subscribe' chỉ khi trong section KAFKA_PRODUCER_LOCAL
             env_value = self.get_env_value( value)
             value_dict[key] = env_value  # Thêm giá trị vào từ điển
 
         # Ghi đè các giá trị từ section khác
         if name_section in self.config:
             for key, value in self.config[name_section].items():
-                if name_section == "KAFKA_PRODUCER_LOCAL" and key == 'subscribe':
-                    continue  # Bỏ qua thuộc tính 'subscribe'  khi trong section KAFKA_PRODUCER_LOCAL
                 env_value = self.get_env_value(value)
                 value_dict[key] = env_value  # Thêm giá trị vào từ điển
 
