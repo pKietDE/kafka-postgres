@@ -4,47 +4,22 @@ from handler_postgres import HandlerPostgres
 from handler_forward import HandlerForward
 from kafka_reader import KafkaReader 
 from threading import Thread
+from kafka_handle_config import *
 import os
 
-# Cấu hình Consumer từ biến môi trường
-CONSUMER_CONFIG_MAIN = {
-    'bootstrap.servers': os.getenv('KAFKA_CONSUMER_MAIN_BOOTSTRAP_SERVERS'),
-    'security.protocol': os.getenv('KAFKA_CONSUMER_MAIN_SECURITY_PROTOCOL'),
-    'sasl.mechanism': os.getenv('KAFKA_CONSUMER_MAIN_SASL_MECHANISM'),
-    'sasl.username': os.getenv('KAFKA_CONSUMER_MAIN_SASL_USERNAME'),
-    'sasl.password': os.getenv('KAFKA_CONSUMER_MAIN_SASL_PASSWORD'),
-    'group.id': os.getenv('KAFKA_CONSUMER_MAIN_GROUP_ID'),
-    'auto.offset.reset': os.getenv('KAFKA_CONSUMER_MAIN_AUTO_OFFSET_RESET')
-}
+# Khoi tao config_reader
+config_reader = ConfigReader()
 
+# Cấu hình Consumer từ biến môi trường
+CONSUMER_CONFIG_MAIN = config_reader.get_config("KAFKA_CONSUMER_MAIN")
 # Cấu hình Producer từ biến môi trường
-PRODUCER_CONFIG_LOCAL = {
-    'bootstrap.servers': os.getenv('KAFKA_PRODUCER_LOCAL_BOOTSTRAP_SERVERS'),
-    'security.protocol': os.getenv('KAFKA_PRODUCER_LOCAL_SECURITY_PROTOCOL'),
-    'sasl.mechanism': os.getenv('KAFKA_PRODUCER_LOCAL_SASL_MECHANISM'),
-    'sasl.username': os.getenv('KAFKA_PRODUCER_LOCAL_SASL_USERNAME'),
-    'sasl.password': os.getenv('KAFKA_PRODUCER_LOCAL_SASL_PASSWORD'),
-}
+PRODUCER_CONFIG_LOCAL = config_reader.get_config("KAFKA_PRODUCER_LOCAL")
 
 # Cấu hình Consumer local từ biến môi trường
-CONSUMER_CONFIG_LOCAL = {
-    'bootstrap.servers': os.getenv('KAFKA_CONSUMER_LOCAL_BOOTSTRAP_SERVERS'),
-    'security.protocol': os.getenv('KAFKA_CONSUMER_LOCAL_SECURITY_PROTOCOL'),
-    'sasl.mechanism': os.getenv('KAFKA_CONSUMER_LOCAL_SASL_MECHANISM'),
-    'sasl.username': os.getenv('KAFKA_CONSUMER_LOCAL_SASL_USERNAME'),
-    'sasl.password': os.getenv('KAFKA_CONSUMER_LOCAL_SASL_PASSWORD'),
-    'group.id': os.getenv('KAFKA_CONSUMER_LOCAL_GROUP_ID'),
-    'auto.offset.reset': os.getenv('KAFKA_CONSUMER_LOCAL_AUTO_OFFSET_RESET')
-}
+CONSUMER_CONFIG_LOCAL = config_reader.get_config("KAFKA_CONSUMER_LOCAL")
 
 # Cấu hình PostgreSQL từ biến môi trường
-POSTGRES_CONFIG = {
-    'dbname': os.getenv('POSTGRES_DBNAME'),
-    'user': os.getenv('POSTGRES_USER'),
-    'password': os.getenv('POSTGRES_PASSWORD'),
-    'host': os.getenv('POSTGRES_HOST'),
-    'port': os.getenv('POSTGRES_PORT'),
-}
+POSTGRES_CONFIG = config_reader.get_config("POSTGRES")
 
 # Cấu hình logger
 logging.basicConfig(level=logging.INFO)
