@@ -20,3 +20,6 @@ __pycache__/
 
 #Bỏ qua thư mục code/ 
 code/
+
+# Bỏ qua các tệp .sh 
+.sh

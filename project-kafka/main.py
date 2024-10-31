@@ -3,8 +3,48 @@ from confluent_kafka import Consumer
 from handler_postgres import HandlerPostgres
 from handler_forward import HandlerForward
 from kafka_reader import KafkaReader 
-from kafka_config import *
 from threading import Thread
+import os
+
+# Cấu hình Consumer từ biến môi trường
+CONSUMER_CONFIG_MAIN = {
+    'bootstrap.servers': os.getenv('KAFKA_CONSUMER_MAIN_BOOTSTRAP_SERVERS'),
+    'security.protocol': os.getenv('KAFKA_CONSUMER_MAIN_SECURITY_PROTOCOL'),
+    'sasl.mechanism': os.getenv('KAFKA_CONSUMER_MAIN_SASL_MECHANISM'),
+    'sasl.username': os.getenv('KAFKA_CONSUMER_MAIN_SASL_USERNAME'),
+    'sasl.password': os.getenv('KAFKA_CONSUMER_MAIN_SASL_PASSWORD'),
+    'group.id': os.getenv('KAFKA_CONSUMER_MAIN_GROUP_ID'),
+    'auto.offset.reset': os.getenv('KAFKA_CONSUMER_MAIN_AUTO_OFFSET_RESET')
+}
+
+# Cấu hình Producer từ biến môi trường
+PRODUCER_CONFIG_LOCAL = {
+    'bootstrap.servers': os.getenv('KAFKA_PRODUCER_LOCAL_BOOTSTRAP_SERVERS'),
+    'security.protocol': os.getenv('KAFKA_PRODUCER_LOCAL_SECURITY_PROTOCOL'),
+    'sasl.mechanism': os.getenv('KAFKA_PRODUCER_LOCAL_SASL_MECHANISM'),
+    'sasl.username': os.getenv('KAFKA_PRODUCER_LOCAL_SASL_USERNAME'),
+    'sasl.password': os.getenv('KAFKA_PRODUCER_LOCAL_SASL_PASSWORD'),
+}
+
+# Cấu hình Consumer local từ biến môi trường
+CONSUMER_CONFIG_LOCAL = {
+    'bootstrap.servers': os.getenv('KAFKA_CONSUMER_LOCAL_BOOTSTRAP_SERVERS'),
+    'security.protocol': os.getenv('KAFKA_CONSUMER_LOCAL_SECURITY_PROTOCOL'),
+    'sasl.mechanism': os.getenv('KAFKA_CONSUMER_LOCAL_SASL_MECHANISM'),
+    'sasl.username': os.getenv('KAFKA_CONSUMER_LOCAL_SASL_USERNAME'),
+    'sasl.password': os.getenv('KAFKA_CONSUMER_LOCAL_SASL_PASSWORD'),
+    'group.id': os.getenv('KAFKA_CONSUMER_LOCAL_GROUP_ID'),
+    'auto.offset.reset': os.getenv('KAFKA_CONSUMER_LOCAL_AUTO_OFFSET_RESET')
+}
+
+# Cấu hình PostgreSQL từ biến môi trường
+POSTGRES_CONFIG = {
+    'dbname': os.getenv('POSTGRES_DBNAME'),
+    'user': os.getenv('POSTGRES_USER'),
+    'password': os.getenv('POSTGRES_PASSWORD'),
+    'host': os.getenv('POSTGRES_HOST'),
+    'port': os.getenv('POSTGRES_PORT'),
+}
 
 # Cấu hình logger
 logging.basicConfig(level=logging.INFO)
