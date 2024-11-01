@@ -23,6 +23,6 @@ class ConfigReader:
 
 if __name__ == "__main__":
     config_reader = ConfigReader()
-    print(config_reader.get_config("POSTGRES"))
+    print(config_reader.get_config("KAFKA_CONSUMER_MAIN"))
 
 
