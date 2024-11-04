@@ -35,8 +35,13 @@ Bằng cách triển khai các bước này, ứng dụng sẽ đọc dữ liệ
 <code>
 project/
 │
-├── <span style="color: #4CAF50;">kafka_handler.py</span>   # Script chính để tạo các hàm xử lý
-├── <span style="color: #4CAF50;">main.py</span>   # Script để xử lý việc tiêu thụ
+├── <span style="color: #4CAF50;">handler_postgres.py</span>   # Script xử lý việc đẩy msg lên database postgres
+├── <span style="color: #4CAF50;">handler_forward.py</span>   # Script xử lý việc lấy dữ liệu từ nguồn về local
+├── <span style="color: #4CAF50;">kafka_config.conf</span>   # Script để cấu hình các params của server
+├── <span style="color: #4CAF50;">kafka_handle_config.py</span>   # Script để xử lý việc đọc config
+├── <span style="color: #4CAF50;">kafka_reader.py</span>   # Script chính để xử lý việc tiêu thụ các thông điệp
+├── <span style="color: #4CAF50;">main.py</span>   # Script chính để chạy
+├── <span style="color: #4CAF50;">message_handler_interface.py</span>   # Script chứa các interface 
 
 </code>
 </pre>
